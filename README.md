@@ -5,7 +5,7 @@ This repository contains two folders
 
 ## Installation
 
-Clone the repository and navigate to the following README files for the installation
+Clone the repository and navigate to the following README files for the installation on your local machine
 
 Frontend: https://github.com/christianArk/assessment/blob/master/rs2.client/README.md
 
@@ -15,4 +15,7 @@ Backend: https://github.com/christianArk/assessment/blob/master/rs2.api/README.m
 ## DEMO
 
 - Client: https://rs2-client.herokuapp.com/
-- Api: https://rs2-api.herokuapp.com/api
+
+**Login name:** chris
+
+**Password:** password
