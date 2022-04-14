@@ -5,7 +5,7 @@ This repository contains two folders
 
 ## Installation
 
-Kindly navigate to the following README files for the installation
+Clone the repository and navigate to the following README files for the installation
 
 Frontend: https://github.com/christianArk/assessment/blob/master/rs2.client/README.md
 
