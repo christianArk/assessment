@@ -1,5 +1,5 @@
 export default function ({ $axios, store, redirect }) {
-    $axios.setBaseURL('http://localhost:3001/api/')
+    $axios.setBaseURL('https://rs2-api.herokuapp.com/api/')
 
     $axios.onRequest(config => {
       if(store.state.authenticated && store.state.token)

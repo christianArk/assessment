@@ -296,6 +296,10 @@ header nav button.logout {
   font-weight: 700;
 }
 
+.responsive-table {
+  overflow-x: auto;
+}
+
 .result-list {
   font-size: 1rem;
   margin-top: 3rem;
@@ -308,6 +312,7 @@ header nav button.logout {
   padding: .8rem 2rem;
   background: #999696;
   color: #ffffff;
+  width: 100%;
 }
 
 .result-list table {

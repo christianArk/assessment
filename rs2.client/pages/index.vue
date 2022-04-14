@@ -40,7 +40,8 @@
                 </div>
                 <div class="result-list">
                     <h3>Your Items</h3>
-                    <table v-if="!isLoading && basket.length">
+                    <div class="responsive-table">
+                      <table v-if="!isLoading && basket.length">
                         <thead>
                             <tr>
                                 <th>Product Name</th>
@@ -55,7 +56,8 @@
                                 <td>{{ item.quantity }}</td>
                             </tr>
                         </tbody>
-                    </table>
+                      </table>
+                    </div>
                     <div v-if="isLoading" class="please-wait">
                       Please wait, fetching your basket...
                     </div>

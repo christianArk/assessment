@@ -4,6 +4,7 @@ $primary-color: #0B0490;
 $white: #ffffff;
 $gray: #4c4a4a;
 $red: red;
+$container-width: 1000px;
 
 * {
     box-sizing: border-box;
@@ -215,7 +216,7 @@ header {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: $container-width;
     margin: 0 auto;
     padding: 2rem;
 }
@@ -267,6 +268,10 @@ header {
     
 }
 
+.responsive-table {
+    overflow-x: auto;
+}
+
 .result-list {
     font-size: 1rem;
     margin-top: 3rem;
@@ -279,6 +284,7 @@ header {
         padding: .8rem 2rem;
         background: lighten($color: $gray, $amount: 30);
         color: $white;
+        width: 100%;
     }
 
     table {

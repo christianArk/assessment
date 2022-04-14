@@ -10,3 +10,9 @@ Clone the repository and navigate to the following README files for the installa
 Frontend: https://github.com/christianArk/assessment/blob/master/rs2.client/README.md
 
 Backend: https://github.com/christianArk/assessment/blob/master/rs2.api/README.md
+
+
+## DEMO
+
+- Client: https://rs2-client.herokuapp.com/
+- Api: https://rs2-api.herokuapp.com/api
