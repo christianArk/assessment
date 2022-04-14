@@ -1,4 +1,4 @@
-# rs2.spa
+# rs2.client
 
 ## Build Setup
 
