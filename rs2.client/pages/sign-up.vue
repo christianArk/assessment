@@ -2,7 +2,7 @@
     <section class="login-main">
         <div class="left-side">
             <div>
-                <h1>MK2 Assessment</h1>
+                <h1>RS2 Assessment</h1>
                 <p>View and add products to your basket</p>
             </div>
         </div>

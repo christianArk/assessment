@@ -70,9 +70,7 @@
 </template>
 
 <script>
-import typeahead from '../components/typeahead.vue'
 export default {
-  components: { typeahead },
   name: 'IndexPage',
   middleware: ['auth'],
   data() {
