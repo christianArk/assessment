@@ -3,7 +3,7 @@ import { UserService } from "../services/userService"
 
 const user = {
                 loginName: "chris",
-                password: "chris123"
+                password: "password"
             }
 
 export const seedUser = async () => {

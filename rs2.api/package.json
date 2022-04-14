@@ -1,5 +1,5 @@
 {
-    "name": "",
+    "name": "rs2",
     "version": "1.0.0",
     "description": "Product cart",
     "main": "index.js",
@@ -9,7 +9,7 @@
         "build": "babel src -d dist",
         "start": "npm run build && node ./dist/index.js"
     },
-    "author": "ChetaJS",
+    "author": "Onyeneke Christian",
     "license": "ISC",
     "devDependencies": {
         "babel-cli": "^6.26.0",
