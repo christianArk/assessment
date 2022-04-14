@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h1 class="logo">RS2 Assessment</h1>
+        <h1 class="logo">MK2 Assessment</h1>
         <nav>
             <ul>
                 <li>{{ username }}</li>

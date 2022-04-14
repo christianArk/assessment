@@ -12,9 +12,9 @@ const products = [
         description: "Babel Album",
     },
     {
-        name: "PES",
+        name: "Game of thrones",
         type: "Games",
-        description: "Pro Evolution Soccer",
+        description: "Game of thrones",
     },
 ]
 

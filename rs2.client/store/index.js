@@ -38,6 +38,13 @@ export const actions = {
             throw error
         })
     },
+    async getProducts() {
+        return await this.$axios.get('product').then(res => {
+            return res.data.data
+        }).catch(error => {
+            throw error
+        })
+    },
     async getProductTypes() {
         return await this.$axios.get('product/types').then(res => {
             return res.data.data

@@ -6,25 +6,31 @@
         <section>
             <div class="container">
                 <div class="search">
-                    <div>
-                        <label for="productName">Product Name <span class="required">*</span></label>
-                        <input v-model="search.product" @keydown="filterInput($event)" type="text" id="productName">
-                    </div>
-                    <div>
-                        <label for="productType">Product Type <span class="required">*</span></label>
-                        <select v-model="search.type" name="product-type" id="productType">
-                            <option v-for="(type, i) in productTypes" :key="i" :value="type">{{ type }}</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="productQty">Quantity</label>
-                        <input  v-model="search.quantity" type="number" id="productQty">
-                    </div>
-                    <div>
-                        <label for="">&nbsp;</label>
-                        <button v-if="!addingToBasket" @click="addToBasket()">Add</button>
-                        <button v-else disabled>Please wait...</button>
-                    </div>
+                    <form @submit.prevent="addToBasket()">
+                      <div class="product-name">
+                          <label for="productName">Product Name <span class="required">*</span></label>
+                          <input autocomplete="off" v-model="search.product" @keydown="filterInput($event)" required type="text" id="productName">
+                          <ul v-show="search.product.length && showSuggestions" class="suggestion">
+                            <li v-for="(product, i) in filteredProducts" :key="i" @click="populateInputs(product)">{{ product.name }}</li>
+                          </ul>
+                      </div>
+                      
+                      <div>
+                          <label for="productType">Product Type <span class="required">*</span></label>
+                          <select v-model="search.type" name="product-type" required id="productType">
+                              <option v-for="(type, i) in productTypes" :key="i" :value="type">{{ type }}</option>
+                          </select>
+                      </div>
+                      <div>
+                          <label for="productQty">Quantity</label>
+                          <input  v-model="search.quantity" required min="1" type="number" id="productQty">
+                      </div>
+                      <div>
+                          <label for="">&nbsp;</label>
+                          <button v-if="!addingToBasket" type="submit">Add</button>
+                          <button v-else disabled>Please wait...</button>
+                      </div>
+                    </form>
                 </div>
                 <div v-if="errors.length" class="error-block">
                     <ul>
@@ -64,7 +70,9 @@
 </template>
 
 <script>
+import typeahead from '../components/typeahead.vue'
 export default {
+  components: { typeahead },
   name: 'IndexPage',
   middleware: ['auth'],
   data() {
@@ -72,18 +80,16 @@ export default {
           addingToBasket: false,
           isLoading: false,
           productTypes: [],
+          products: [],
           basket: [],
           errors: [],
+          showSuggestions: false,
           search: {
             product: '',
             type: '',
             quantity: ''
           }
       }
-  },
-  mounted() {
-    this.getProductTypes()
-    this.getUserBasket()
   },
   watch: {
     'search.product'(value) {
@@ -94,12 +100,36 @@ export default {
       }
     }
   },
+  computed: {
+    filteredProducts() {
+      return this.products.filter(product => {
+        return product.name.toLowerCase().includes(this.search.product.toLowerCase())
+      })
+    }
+  },
+  mounted() {
+    this.getProductTypes()
+    this.getAllProducts()
+    this.getUserBasket()
+  },
   methods: {
+    populateInputs(product) {
+      this.showSuggestions = false
+      this.search.product = product.name
+      this.search.type = product.type
+    },
     getProductTypes() {
         this.$store.dispatch('getProductTypes', this.user).then(res => {
             this.productTypes = res
         }).catch(error => {
             this.$toast.error('An error occured fetching product types')
+        })
+    },
+    getAllProducts() {
+        this.$store.dispatch('getProducts').then(res => {
+            this.products = res
+        }).catch(error => {
+            this.$toast.error('An error occured fetching products')
         })
     },
     getUserBasket() {
@@ -146,6 +176,7 @@ export default {
       }
     },
     filterInput(e) {
+      this.showSuggestions = true
       const regex = /^[A-Za-z ]+$/;
       if (regex.test(e.key) === false) {
         this.$toast.error('Only letters are allowed')
