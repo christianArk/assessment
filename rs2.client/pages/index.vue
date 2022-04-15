@@ -9,7 +9,7 @@
                     <form @submit.prevent="addToBasket()">
                       <div class="product-name">
                           <label for="productName">Product Name <span class="required">*</span></label>
-                          <input autocomplete="off" v-model="search.product" @keydown="filterInput($event)" @blur="showSuggestions = false" required type="text" id="productName">
+                          <input autocomplete="off" v-model="search.product" @keydown="filterInput($event)" required type="text" id="productName">
                           <ul v-show="search.product.length && showSuggestions" class="suggestion">
                             <li v-for="(product, i) in filteredProducts" :key="i" @click="populateInputs(product)">{{ product.name }}</li>
                           </ul>
