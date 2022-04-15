@@ -21,11 +21,7 @@ mongoose.connect(DB_URI, {
 seedUser()
 seedProducts()
 
-app.use(cors(
-    {
-        origin: '*'
-    }
-))
+app.use(cors())
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
