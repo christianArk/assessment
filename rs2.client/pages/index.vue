@@ -41,7 +41,7 @@
                 <div class="result-list">
                     <h3>Your Items</h3>
                     <div class="responsive-table">
-                      <table v-if="!isLoading && basket.length">
+                      <table v-if="!isLoading && hasBasket">
                         <thead>
                             <tr>
                                 <th>Product Name</th>
@@ -61,7 +61,7 @@
                     <div v-if="isLoading" class="please-wait">
                       Please wait, fetching your basket...
                     </div>
-                    <div v-if="!isLoading && basket.length == 0" class="please-wait">
+                    <div v-if="!isLoading && !hasBasket" class="please-wait">
                       Your basket is currently empty.
                     </div>
                 </div>
@@ -101,6 +101,9 @@ export default {
     }
   },
   computed: {
+    hasBasket() {
+      return this.basket.length > 0
+    },
     filteredProducts() {
       return this.products.filter(product => {
         return product.name.toLowerCase().includes(this.search.product.toLowerCase())
@@ -124,7 +127,7 @@ export default {
       this.search.type = product.type
     },
     getProductTypes() {
-        this.$store.dispatch('getProductTypes', this.user).then(res => {
+        this.$store.dispatch('getProductTypes').then(res => {
             this.productTypes = res
         }).catch(error => {
             this.$toast.error('An error occured fetching product types')
@@ -139,7 +142,7 @@ export default {
     },
     getUserBasket() {
         this.isLoading = true
-        this.$store.dispatch('getUserBasket', this.user).then(res => {
+        this.$store.dispatch('getUserBasket').then(res => {
             this.isLoading = false
             this.basket = res
         }).catch(error => {
@@ -151,17 +154,17 @@ export default {
       this.clearErrors()
       this.addingToBasket = true
       this.$store.dispatch('addToBasket', this.search).then(res => {
-            this.$toast.success('Item successfully added to basket')
             this.addingToBasket = false
-            // clear form
-            this.clearForm()
             this.basket.push(res)
+            // // clear form
+            this.clearForm()
+            this.$toast.success('Item successfully added to basket')
         }).catch(error => {
-            this.addingToBasket = false
-            this.errors = error.errors
-            setTimeout(() => {
-              this.clearErrors()
-            }, 5000);
+            // this.addingToBasket = false
+            // this.errors = error.errors
+            // setTimeout(() => {
+            //   this.clearErrors()
+            // }, 5000);
         })
       
     },
@@ -170,10 +173,10 @@ export default {
       if (confirm)
       {
         this.$store.dispatch('deleteFromBasket', itemId).then(res => {
-          this.$toast.success(res.message)
           this.basket = this.basket.filter(item => {
             return item._id != itemId
           })
+          this.$toast.success(res.message)
         }).catch(error => {
           this.isLoading = false
           this.$toast.error('An error occured')
