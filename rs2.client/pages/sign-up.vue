@@ -20,7 +20,7 @@
                             <input type="password" id="password" v-model="user.password" required />  
                         </div>
                         <div>
-                            <button :disabled="!inputsAreDirty" v-if="!isLoading" @click.prevent="login">Register</button> 
+                            <button :disabled="!inputsAreDirty" v-if="!isLoading" @click.prevent="signup">Register</button> 
                             <button disabled v-else>Please wait...</button> 
                         </div>
                     </form>
@@ -54,7 +54,7 @@ export default {
       }
   },
   methods: {
-    login() {
+    signup() {
         this.isLoading = true
         this.$store.dispatch('register', this.user).then(res => {
             this.$toast.success('Registration successful')
