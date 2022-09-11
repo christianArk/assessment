@@ -1,6 +1,5 @@
 import { mount, createLocalVue, shallowMount } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { LoaderTargetPlugin } from 'webpack';
 import Index from '../pages/index.vue'
 
 const localVue = createLocalVue()
@@ -20,9 +19,14 @@ describe('Index.vue', () => {
 
     const products = [
         {
-            name: 'Item 1',
-            type: 'Book',
+            name: 'Item One',
+            type: 'Book 1',
             description: 'Desc 1'
+        },
+        {
+            name: 'Item Two',
+            type: 'Book 2',
+            description: 'Desc 2'
         }
     ]
 
@@ -133,6 +137,78 @@ describe('Index.vue', () => {
         it('should remove item from the basket', async () => {
             expect(wrapper.vm.basket).toHaveLength(0)
             
+        })
+    })
+
+    describe('when hiding selections', () => {
+        const wrapper = createMount();
+
+        beforeEach(() => {
+            jest.useFakeTimers()
+            wrapper.setData({ showSuggestions: true})
+            wrapper.vm.hideSelections()
+        })
+
+        afterAll(() => {
+            jest.useRealTimers()
+        })
+
+        it('should hide selections', async () => {
+            jest.runAllTimers()
+            expect(wrapper.vm.showSuggestions).toBeFalsy();
+        })
+    })
+
+    describe('when populating inputs', () => {
+        const product = { name: 'Product 1', type: 'Type 1'}
+        const wrapper = createMount();
+
+        beforeEach(() => {
+            wrapper.setData({search: {}})
+            wrapper.vm.populateInputs(product)
+        })
+
+        it('should hide selections', async () => {
+            expect(wrapper.vm.showSuggestions).toBeFalsy();
+        })
+
+        it('should populate search model', async () => {
+            expect(wrapper.vm.search.product).toEqual(product.name);
+            expect(wrapper.vm.search.type).toEqual(product.type);
+        })
+    })
+
+    describe('when filtering inputs', () => {
+        const wrapper = createMount();
+
+        // beforeEach(async () => {
+        //     wrapper.setData({products: products, search: { product: 'Item 1' }})
+        // })
+
+        afterEach(() => {
+            jest.clearAllMocks()
+        })
+
+        it('should call filterInput', async () => {
+            const spy = jest.spyOn(wrapper.vm, 'filterInput')
+            const input = wrapper.find('input#productName')
+            const event = new KeyboardEvent('keydown')
+            await input.trigger('keydown', { keyCode: 80 })
+            expect(spy).toHaveBeenCalled()
+            expect(spy).toHaveBeenCalledWith(event)
+        })
+
+        it('should return false for numbers and special characters', async () => {
+            const event = new KeyboardEvent('keydown', { key: '123' })
+            const input = await wrapper.vm.filterInput(event)
+            expect(input).toBeFalsy()
+        })
+
+        it('should return true for characters a-zA-Z and space', async () => {
+            const event = new KeyboardEvent('keydown', { key: 'Item One' })
+            const input = await wrapper.vm.filterInput(event)
+            wrapper.vm.$nextTick()
+            expect(input).toBeTruthy()
         })
     })
 

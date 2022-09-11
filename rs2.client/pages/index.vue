@@ -191,6 +191,7 @@ export default {
         e.preventDefault()
         return false
       }
+      return true
     },
     clearForm() {
       this.search = {
