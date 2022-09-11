@@ -77,7 +77,7 @@ describe('Index.vue', () => {
 
     describe('when mounting the page', () => {
         const wrapper = createMount();
-        it('make necessary calls (getProductTypes, getProducts, getUserBasket)', async () => { 
+        it('makes necessary calls (getProductTypes, getProducts, getUserBasket)', async () => { 
             expect(actions.getProductTypes).toHaveBeenCalled()
             expect(actions.getProducts).toHaveBeenCalled()
             expect(actions.getUserBasket).toHaveBeenCalled()
@@ -98,11 +98,11 @@ describe('Index.vue', () => {
             wrapper.vm.addToBasket()
         })
 
-        it('clear any existing errors', async () => {
+        it('clears any existing errors', async () => {
             expect(wrapper.vm.errors).toHaveLength(0)
         })
 
-        it('make addToBasket call', async () => {
+        it('makes addToBasket call', async () => {
             expect(actions.addToBasket).toHaveBeenCalled()
         })
 
@@ -126,7 +126,7 @@ describe('Index.vue', () => {
             wrapper.vm.removeItem(1)
         })
 
-        it('make deleteFromBasket request', async () => {
+        it('makes deleteFromBasket request', async () => {
             expect(actions.deleteFromBasket).toHaveBeenCalled()
         })
 
