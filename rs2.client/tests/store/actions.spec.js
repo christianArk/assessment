@@ -16,21 +16,28 @@ const successRes = {
 
 describe('Actions', () => {
     describe('on register', () => {
-        actions.$axios.post.mockResolvedValue(Promise.resolve(successRes))
         beforeEach(async () => {
-            await actions.register({ commit }, {})
+            await actions.$axios.post.mockResolvedValue(Promise.resolve(successRes))
+            actions.register({ commit }, {})
         })
-        afterAll(() => {
-            actions.$axios.post.mockReset()
+        afterEach(() => {
+            actions.$axios.post.mockClear()
         })
-        it('should call signup', () => {
+        it('should call signup', async () => {
             expect(actions.$axios.post).toHaveBeenCalledWith('auth/signup', {})
         })
-        it('should commit the received token on success', () => {
+        it('should commit the received token on success', async () => {
             expect(commit).toHaveBeenCalledWith('setAuth', token)
         })
-        // it('should commit the received token on success', () => {
-        //     expect(commit).toHaveBeenCalledWith('setAuth', token)
-        // })
+        it('should return error on fail', async () => {
+            const err = new Error('Failed')
+            actions.$axios.post.mockRejectedValue(Promise.reject(err))
+            expect.assertions(1)
+            try {
+                await actions.register({ commit }, {})
+            } catch (errorMsg) {
+                expect(errorMsg).toEqual(err)
+            }
+        })
     })
 })

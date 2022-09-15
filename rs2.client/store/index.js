@@ -25,11 +25,13 @@ export const mutations = {
 
 export const actions = {
     async register({commit}, payload) {
-        return await this.$axios.post('auth/signup', payload).then(res => {
+        try {
+            const res = await this.$axios.post('auth/signup', payload);
             commit('setAuth', res.data.data)
-        }).catch(error => {
-            throw error
-        })
+            return res
+        } catch (error) {
+            return error
+        }
     },
     async authenticate({commit}, payload) {
         return await this.$axios.post('auth/login', payload).then(res => {
