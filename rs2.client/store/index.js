@@ -30,22 +30,25 @@ export const actions = {
             commit('setAuth', res.data.data)
             return res
         } catch (error) {
-            return error
+            throw error
         }
     },
     async authenticate({commit}, payload) {
-        return await this.$axios.post('auth/login', payload).then(res => {
+        try {
+            const res = await this.$axios.post('auth/login', payload);
             commit('setAuth', res.data.data)
-        }).catch(error => {
+            return res
+        } catch (error) {
             throw error
-        })
+        }
     },
     async getProducts() {
-        return await this.$axios.get('product').then(res => {
+        try {
+            const res = await this.$axios.get('product');
             return res.data.data
-        }).catch(error => {
+        } catch (error) {
             throw error
-        })
+        }
     },
     async getProductTypes() {
         return await this.$axios.get('product/types').then(res => {
