@@ -65,11 +65,12 @@ export const actions = {
         })
     },
     async addToBasket({}, payload) {
-        return await this.$axios.post(`basket`, payload).then(res => {
+        try {
+            const res = await this.$axios.post('basket', payload);
             return res.data.data
-        }).catch(error => {
+        } catch (error) {
             throw error
-        })
+        }
     },
     async deleteFromBasket({}, itemId) {
         return await this.$axios.delete(`basket/${itemId}`).then(res => {
